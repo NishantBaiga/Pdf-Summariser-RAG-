@@ -113,6 +113,7 @@ export default async function PdfListingPage({
         </div>
       )}
 
+{/* PDF LIST */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
         {pdfs.map((pdf) => (
           <div
@@ -133,7 +134,7 @@ export default async function PdfListingPage({
             <Link
               href={`/workspace/${pdf.id}`}
               className="block font-semibold text-lg text-gray-900 dark:text-white
-                   hover:text-orange-600 transition-colors duration-200"
+                   hover:text-orange-600 hover:underline transition-colors duration-200"
             >
               <HighlightText text={pdf.name} query={query} />
             </Link>
@@ -156,6 +157,7 @@ export default async function PdfListingPage({
         ))}
       </div>
 
+      {/* PAGINATION */}
       {totalPages > 1 && (
         <div className="mt-14 flex justify-center">
           <Pagination>

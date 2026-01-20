@@ -30,16 +30,14 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="relative flex flex-col min-h-screen ">
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <ClerkThemeWrapper>
-              <main>
-                <Header />
-                {children}
-              </main>
-            </ClerkThemeWrapper>
-          </ThemeProvider>
-        </div>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ClerkThemeWrapper>
+            <div className="relative flex flex-col h-screen overflow-hidden ">
+              <Header />
+              <main className="flex-1 min-h-0 overflow-hidden">{children}</main>
+            </div>
+          </ClerkThemeWrapper>
+        </ThemeProvider>
       </body>
     </html>
   );
