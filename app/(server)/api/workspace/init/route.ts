@@ -4,8 +4,11 @@ import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { NextResponse } from "next/server";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { storePdfChunks } from "@/lib/qdrant/storeChunks";
+import { auth } from "@clerk/nextjs/server";
 export async function POST(req: Request) {
   try {
+    const {userId} = await auth();
+    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
     const { fileId } = await req.json();
     let file = await db.file.findUnique({
       where: { id: fileId },

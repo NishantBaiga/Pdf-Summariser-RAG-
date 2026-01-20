@@ -23,7 +23,7 @@ export default function NavLinks({ isMobile = false }: { isMobile?: boolean }) {
 
       <SignedIn>
         <Link
-          href="/listing"
+          href="/pdfs"
           className="text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-colors"
         >
           Your PDF's
