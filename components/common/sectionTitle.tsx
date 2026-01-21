@@ -1,10 +1,18 @@
+interface Props {
+  children: React.ReactNode,
+  className?: string,
+  align?: 'left' | 'center' | 'right',
+  size?: 'small' | 'default' | 'large',
+  withUnderline?: boolean
+}
+
 export const SectionTitle = ({ 
   children, 
   className = '',
   align = 'left',
   size = 'default',
   withUnderline = false 
-}) => {
+}: Props) => {
   const alignmentClasses = {
     left: 'text-left',
     center: 'text-center',

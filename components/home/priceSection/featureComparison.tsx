@@ -1,6 +1,34 @@
 import { Card } from "@/components/common/card";
 
-export const FeatureComparison = ({ plans }) => (
+
+
+import { LucideIcon } from "lucide-react";
+
+ export interface Plan {
+  id: "free" | "pro" | "enterprise";
+  name: string;
+  description: string;
+  price: string;
+  pricePeriod: string;
+  popular: boolean;
+  icon: LucideIcon;
+  color: "gray" | "orange" | "purple";
+  features: string[];
+  cta: string;
+  href: string;
+}
+
+ interface FeatureRow {
+  feature: string;
+  values: Record<Plan["id"], string>;
+}
+
+interface FeatureComparisonProps {
+  plans: Plan[];
+  // rows: FeatureRow[];
+}
+
+export const FeatureComparison = ({ plans }: FeatureComparisonProps) => (
   <Card className="mt-16">
     <h3 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
       Compare Plans Feature by Feature

@@ -105,89 +105,89 @@ export async function POST(req: Request) {
   }
 }
 
-async function extractText(fileUrl: string) {
-  try {
-    if (!fileUrl) {
-      throw Error("File URL is required");
-    }
+// async function extractText(fileUrl: string) {
+//   try {
+//     if (!fileUrl) {
+//       throw Error("File URL is required");
+//     }
 
-    // 1. Fetch the PDF file from the URL (UploadThing)
-    const response = await fetch(fileUrl);
-    if (!response.ok) throw new Error("Failed to download PDF");
-    const blob = await response.blob();
+//     // 1. Fetch the PDF file from the URL (UploadThing)
+//     const response = await fetch(fileUrl);
+//     if (!response.ok) throw new Error("Failed to download PDF");
+//     const blob = await response.blob();
 
-    // 2. Load the PDF using LangChain
-    const loader = new PDFLoader(blob);
-    const docs = await loader.load();
+//     // 2. Load the PDF using LangChain
+//     const loader = new PDFLoader(blob);
+//     const docs = await loader.load();
 
-    // 3. Combine the text from all pages into one string
-    const fullText = docs.map((doc) => doc.pageContent).join("\n");
+//     // 3. Combine the text from all pages into one string
+//     const fullText = docs.map((doc) => doc.pageContent).join("\n");
 
-    const pages = docs.map((doc, index) => ({
-      page: index + 1,
-      text: doc.pageContent,
-    }));
-    const pageCount = docs.length;
+//     const pages = docs.map((doc, index) => ({
+//       page: index + 1,
+//       text: doc.pageContent,
+//     }));
+//     const pageCount = docs.length;
 
-    console.log("extractText info :", { pageCount, pages, fullText });
+//     console.log("extractText info :", { pageCount, pages, fullText });
 
-    return { pageCount: pageCount, fullText: fullText, pages: pages };
-  } catch (error) {
-    console.error("Text Extraction Error:", error);
-    throw new Error("Failed to extract text");
-  }
-}
+//     return { pageCount: pageCount, fullText: fullText, pages: pages };
+//   } catch (error) {
+//     console.error("Text Extraction Error:", error);
+//     throw new Error("Failed to extract text");
+//   }
+// }
 
-async function splitText(text: string) {
-  try {
-    const splitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 500, // 1000,
-      chunkOverlap: 100, // 150,
-    });
-    const chunks = await splitter.splitText(text);
-    console.log("splitText info :", { chunks });
-    return chunks; // array of strings
-  } catch (error) {
-    console.error("Text Splitting Error:", error);
-    throw new Error("Failed to split text");
-  }
-}
+// async function splitText(text: string) {
+//   try {
+//     const splitter = new RecursiveCharacterTextSplitter({
+//       chunkSize: 500, // 1000,
+//       chunkOverlap: 100, // 150,
+//     });
+//     const chunks = await splitter.splitText(text);
+//     console.log("splitText info :", { chunks });
+//     return chunks; // array of strings
+//   } catch (error) {
+//     console.error("Text Splitting Error:", error);
+//     throw new Error("Failed to split text");
+//   }
+// }
 
-async function embeddingText(textChunks: string[]) {
-  try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
-    const embeddings = [];
+// async function embeddingText(textChunks: string[]) {
+//   try {
+//     const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
+//     const embeddings = [];
 
-    for (let i = 0; i < textChunks.length; i++) {
-      const chunk = textChunks[i];
+//     for (let i = 0; i < textChunks.length; i++) {
+//       const chunk = textChunks[i];
 
-      const embeddingResult = await ai.models.embedContent({
-        model: "models/text-embedding-004",
-        contents: chunk,
-      });
+//       const embeddingResult = await ai.models.embedContent({
+//         model: "models/text-embedding-004",
+//         contents: chunk,
+//       });
 
-      if (
-        !embeddingResult.embeddings ||
-        embeddingResult.embeddings.length === 0 ||
-        !embeddingResult.embeddings[0].values
-      ) {
-        throw new Error(`Embedding failed for chunk ${i}`);
-      }
+//       if (
+//         !embeddingResult.embeddings ||
+//         embeddingResult.embeddings.length === 0 ||
+//         !embeddingResult.embeddings[0].values
+//       ) {
+//         throw new Error(`Embedding failed for chunk ${i}`);
+//       }
 
-      const vector = embeddingResult.embeddings[0].values;
+//       const vector = embeddingResult.embeddings[0].values;
 
-      embeddings.push({
-        chunk,
-        vector,
-      });
-    }
+//       embeddings.push({
+//         chunk,
+//         vector,
+//       });
+//     }
 
-    return embeddings;
-  } catch (error) {
-    console.error("Embedding Error:", error);
-    throw new Error("Failed to generate embeddings");
-  }
-}
+//     return embeddings;
+//   } catch (error) {
+//     console.error("Embedding Error:", error);
+//     throw new Error("Failed to generate embeddings");
+//   }
+// }
 
 // async function summarizeText(extractedText: string) {
 //   try {

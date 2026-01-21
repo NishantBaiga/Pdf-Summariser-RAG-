@@ -1,10 +1,11 @@
 import { headers } from "next/headers";
 import { Webhook } from "svix";
 import { db } from "@/lib/db";
+import type { WebhookEvent } from "@clerk/nextjs/server";
 
 export async function POST(req: Request) {
   const payload = await req.text();
-  const headerPayload = headers();
+  const headerPayload = await headers();
 
   const svixHeaders = {
     "svix-id": headerPayload.get("svix-id")!,
@@ -17,11 +18,11 @@ export async function POST(req: Request) {
     return new Response("Missing webhook secret", { status: 500 });
   }
 
-  let event;
+  let event : WebhookEvent;
 
   try {
     const wh = new Webhook(webhookSecret);
-    event = wh.verify(payload, svixHeaders);
+    event = wh.verify(payload, svixHeaders) as WebhookEvent;
   } catch (err) {
     console.error("Webhook verification failed", err);
     return new Response("Invalid signature", { status: 400 });
@@ -39,7 +40,7 @@ export async function POST(req: Request) {
 
     await db.user.create({
       data: {
-        id: user.id, // Clerk userId
+        clerkId: user.id, // Clerk userId
         email,
         fullName: `${user.first_name ?? ""} ${user.last_name ?? ""}`.trim(),
       },

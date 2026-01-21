@@ -2,8 +2,12 @@ import { UploadCloud, Brain, Sparkles } from 'lucide-react';
 import { Card } from '../common/card';
 import { SectionTitle } from '../common/sectionTitle';
 
-
-export const FeatureItem = ({ icon: Icon, title, description }) => (
+interface FeatureItemProps{
+    icon: any;
+    title: string;
+    description: string;
+} 
+export const FeatureItem = ({ icon: Icon, title, description }: FeatureItemProps) => (
     <Card className="flex flex-col items-center text-center p-4">
         <div className="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-full mb-4">
             <Icon className="w-8 h-8 text-orange-600 dark:text-orange-400" />

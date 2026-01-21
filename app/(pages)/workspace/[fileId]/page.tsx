@@ -168,7 +168,7 @@ function ChatSection({
           </div>
         </div>
 
-        {messages.map((msg, i) => (
+        {messages.map((msg :any, i: any) => (
           <div
             key={i}
             className={`p-3 rounded-xl max-w-[80%] text-sm ${

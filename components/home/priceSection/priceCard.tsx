@@ -1,11 +1,17 @@
 import { Card } from "@/components/common/card";
 import { Button } from "@/components/ui/button";
 import { Check, Star, Zap } from "lucide-react";
+import { Plan } from "./featureComparison";
 
-export const PricingCard = ({ plan, isAnnual }) => {
+
+interface Props{
+  plan : Plan
+  isAnnual : boolean
+}
+export const PricingCard = ({ plan, isAnnual }:Props) => {
   const Icon = plan.icon;
   
-  const calculateAnnualPrice = (monthlyPrice) => {
+  const calculateAnnualPrice = (monthlyPrice : string) => {
     if (monthlyPrice === '$0') return '$0';
     if (monthlyPrice === 'Custom') return 'Custom';
     const price = parseInt(monthlyPrice.replace('$', ''));

@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { Card } from '../common/card';
 import { SectionTitle } from '../common/sectionTitle';
 import { PricingCard } from './priceSection/priceCard';
-import { FeatureComparison } from './priceSection/featureComparison';
+import { FeatureComparison, Plan } from './priceSection/featureComparison';
 
-const plans = [
+const plans: Plan[] = [
   {
     id: 'free',
     name: 'Starter',
