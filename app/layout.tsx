@@ -32,9 +32,11 @@ export default async function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ClerkThemeWrapper>
-            <div className="relative flex flex-col h-screen overflow-hidden ">
+            {/* <div className="relative flex flex-col h-screen overflow-hidden "> */}
+            <div className="relative flex flex-col h-screen ">
               <Header />
-              <main className="flex-1 min-h-0 overflow-hidden">{children}</main>
+              {/* <main className="flex-1 min-h-0 overflow-hidden">{children}</main> */}
+              <main className="flex-1 ">{children}</main>
             </div>
           </ClerkThemeWrapper>
         </ThemeProvider>

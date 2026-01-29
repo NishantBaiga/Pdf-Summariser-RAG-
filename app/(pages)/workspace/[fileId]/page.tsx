@@ -142,6 +142,70 @@ export default function WorkSpacePage() {
 
 /* ---------------- CHAT SECTION ---------------- */
 
+// function ChatSection({
+//   fileId,
+//   summary,
+//   loading,
+//   messages,
+//   sending,
+//   input,
+//   setInput,
+//   sendMessage,
+// }: any) {
+//   return (
+//     <div className="flex flex-col h-full min-h-0 bg-white dark:bg-gray-950">
+//       <div className="p-4 border-b text-xs text-gray-500">
+//         File ID: {fileId}
+//       </div>
+
+//       <div className="flex-1 overflow-y-auto p-6 space-y-6">
+//         <div>
+//           <h3 className="text-xs font-bold text-gray-400 uppercase mb-2">
+//             Summary
+//           </h3>
+//           <div className="p-4 rounded-xl bg-gray-100 dark:bg-gray-900 text-xs font-mono whitespace-pre-wrap">
+//             {loading ? "Summarizing..." : summary}
+//           </div>
+//         </div>
+
+//         {messages.map((msg :any, i: any) => (
+//           <div
+//             key={i}
+//             className={`p-3 rounded-xl max-w-[80%] text-sm ${
+//               msg.role === "user"
+//                 ? "bg-blue-600 text-white ml-auto"
+//                 : "bg-gray-200 dark:bg-gray-800"
+//             }`}
+//           >
+//             {msg.content}
+            
+//           </div>
+//         ))}
+
+//         {sending && <div className="text-sm">Thinking...</div>}
+
+        
+//       </div>
+
+//       <div className="p-4 border-t flex gap-2">
+//         <Input
+//           value={input}
+//           onChange={(e) => setInput(e.target.value)}
+//           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+//           placeholder="Ask about this PDF..."
+//         />
+//         <Button onClick={sendMessage} disabled={sending}>
+//           Send
+//         </Button>
+//       </div>
+   
+   
+   
+//     </div>
+//   );
+// }
+
+
 function ChatSection({
   fileId,
   summary,
@@ -153,38 +217,47 @@ function ChatSection({
   sendMessage,
 }: any) {
   return (
-    <div className="flex flex-col h-full min-h-0 bg-white dark:bg-gray-950">
-      <div className="p-4 border-b text-xs text-gray-500">
+    <div className="flex flex-col h-full bg-white dark:bg-gray-950">
+      {/* File ID header - fixed height */}
+      <div className="flex-shrink-0 p-4 border-b text-xs text-gray-500">
         File ID: {fileId}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        <div>
+      {/* Main content area - this should grow and contain scrollable messages */}
+      <div className="flex-1 flex flex-col min-h-0">
+        {/* Summary section - fixed height */}
+        <div className="flex-shrink-0 p-4 border-b">
           <h3 className="text-xs font-bold text-gray-400 uppercase mb-2">
             Summary
           </h3>
-          <div className="p-4 rounded-xl bg-gray-100 dark:bg-gray-900 text-xs font-mono whitespace-pre-wrap">
+          <div className="p-4 rounded-xl bg-gray-100 dark:bg-gray-900 text-xs font-mono whitespace-pre-wrap max-h-32 overflow-y-auto">
             {loading ? "Summarizing..." : summary}
           </div>
         </div>
 
-        {messages.map((msg :any, i: any) => (
-          <div
-            key={i}
-            className={`p-3 rounded-xl max-w-[80%] text-sm ${
-              msg.role === "user"
-                ? "bg-blue-600 text-white ml-auto"
-                : "bg-gray-200 dark:bg-gray-800"
-            }`}
-          >
-            {msg.content}
-          </div>
-        ))}
+        {/* Messages area - scrollable */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {messages.map((msg: any, i: any) => (
+            <div
+              key={i}
+              className={`p-3 rounded-xl max-w-[80%] text-sm ${
+                msg.role === "user"
+                  ? "bg-blue-600 text-white ml-auto"
+                  : "bg-gray-200 dark:bg-gray-800"
+              }`}
+            >
+              {msg.content}
+            </div>
+          ))}
 
-        {sending && <div className="text-sm">Thinking...</div>}
+          {sending && (
+            <div className="text-sm text-gray-500 italic">Thinking...</div>
+          )}
+        </div>
       </div>
 
-      <div className="p-4 border-t flex gap-2">
+      {/* Input section - fixed at bottom */}
+      <div className="flex-shrink-0 p-4 border-t flex gap-2">
         <Input
           value={input}
           onChange={(e) => setInput(e.target.value)}
