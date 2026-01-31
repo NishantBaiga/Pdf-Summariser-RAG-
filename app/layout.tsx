@@ -35,9 +35,9 @@ export default async function RootLayout({
           <ClerkThemeWrapper>
             {/* <div className="relative flex flex-col h-screen overflow-hidden "> */}
             <Header />
-            <div className="relative flex flex-col h-screen  bg-red-600">
+            <div className="relative flex flex-col h-screen">
               {/* <main className="flex-1 min-h-0 overflow-hidden">{children}</main> */}
-              <SidebarProvider>
+              <SidebarProvider >
                 <main className="flex-1  ">{children}</main>
               </SidebarProvider>
             </div>

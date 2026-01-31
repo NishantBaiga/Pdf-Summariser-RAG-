@@ -34,23 +34,11 @@ export default function WorkSpacePage() {
   const [activeTab, setActiveTab] = useState("chat");
 
   // Mock data - replace with actual data from your API/hooks
-  const mockFiles = [
-    {
-      id: "1",
-      name: "Document 1.pdf",
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "2",
-      name: "Research Paper.pdf",
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "3",
-      name: "Invoice 2024.pdf",
-      createdAt: new Date().toISOString(),
-    },
-  ];
+  const mockFiles = Array.from({ length: 20 }, (_, i) => ({
+    id: String(i + 1),
+    name: `Document ${i + 1}.pdf`,
+    createdAt: new Date().toISOString(),
+  }));
 
   const handleUpload = () => {
     // Implement upload logic
@@ -72,7 +60,7 @@ export default function WorkSpacePage() {
         <Tabs 
           value={activeTab} 
           onValueChange={setActiveTab} 
-          className="flex-1 flex flex-col"
+          className="flex-1 flex flex-col gap-0"
         >
           {/* Top Bar with Hamburger and Tabs */}
           <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-950 border-b">
@@ -133,13 +121,12 @@ export default function WorkSpacePage() {
           files={mockFiles}
           onUpload={handleUpload}
         />
-
         {/* Main Content */}
         <div className="flex-1 ">
           <ResizablePanelGroup direction="horizontal" className="h-full">
-            <ResizablePanel defaultSize={45} minSize={30} >
-              <div className="h-full p-4 bg-gray-200 dark:bg-gray-800">
-                <div className="h-full bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow">
+            <ResizablePanel defaultSize={45} minSize={0} >
+              {/* <div className="h-full p-4 bg-gray-200 dark:bg-gray-800"> */}
+                <div className="h-full p-4  bg-white dark:bg-gray-900 rounded-lg overflow-hidden ">
                   {loadingPdf ? (
                     <div className="flex items-center justify-center h-full">
                       Loading PDF...
@@ -148,12 +135,12 @@ export default function WorkSpacePage() {
                     pdfUrl && <iframe src={pdfUrl} className="w-full h-full" />
                   )}
                 </div>
-              </div>
+              {/* </div> */}
             </ResizablePanel>
 
             <ResizableHandle withHandle />
 
-            <ResizablePanel defaultSize={55} minSize={35}>
+            <ResizablePanel defaultSize={55} minSize={10}>
               <ChatSection
                 fileId={fileId}
                 summary={summary}
