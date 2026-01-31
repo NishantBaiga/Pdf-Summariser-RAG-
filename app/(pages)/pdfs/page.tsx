@@ -3,9 +3,9 @@ import Link from "next/link";
 import { FileText, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
-import { PdfActionsMenu } from "@/components/pdf-action-menu";
-import { SearchInput } from "@/components/search-input";
-import { HighlightText } from "@/components/highlight-text";
+import { PdfActionsMenu } from "@/components/uploaded-pdfs/pdf-action-menu";
+import { SearchInput } from "@/components/uploaded-pdfs/search-input";
+import { HighlightText } from "@/components/uploaded-pdfs/highlight-text";
 import { Prisma } from "../../../lib/generated/prisma/client";
 
 import {
@@ -16,7 +16,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { SortSelect } from "@/components/sort-select";
+import { SortSelect } from "@/components/uploaded-pdfs/sort-select";
 
 const PAGE_SIZE = 9;
 export default async function PdfListingPage({

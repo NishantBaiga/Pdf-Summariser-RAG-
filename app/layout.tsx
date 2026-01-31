@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/common/header";
 import { ThemeProvider } from "next-themes";
 import ClerkThemeWrapper from "@/components/common/clerk-theme";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,10 +34,12 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ClerkThemeWrapper>
             {/* <div className="relative flex flex-col h-screen overflow-hidden "> */}
-            <div className="relative flex flex-col h-screen ">
-              <Header />
+            <Header />
+            <div className="relative flex flex-col h-screen  bg-red-600">
               {/* <main className="flex-1 min-h-0 overflow-hidden">{children}</main> */}
-              <main className="flex-1 ">{children}</main>
+              <SidebarProvider>
+                <main className="flex-1  ">{children}</main>
+              </SidebarProvider>
             </div>
           </ClerkThemeWrapper>
         </ThemeProvider>
